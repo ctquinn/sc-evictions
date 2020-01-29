@@ -1,0 +1,44 @@
+---
+title: "South Carolina (SC) Cities Evictions EDA File"
+author: "Connor Quinn"
+date: "`r Sys.Date()`"
+output: 
+  github_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message=FALSE, warning=FALSE}
+# Libraries
+library(tidyverse)
+library(knitr)
+
+# Parameters
+cities_path = here::here("data/cities.rds")
+
+#===============================================================================
+```
+
+## Reading in and initial exploration
+
+```{r}
+cities_tbl <- read_rds(cities_path)
+
+cities_tbl
+```
+
+
+Which carolina city had the most evictions in 2016? Note that this data is already filtered to 2016, so we simply find the max:
+
+```{r}
+cities_tbl %>% 
+  filter(num_evictions == max(num_evictions, na.rm = TRUE)) %>%
+  select(name, num_evictions) %>% 
+  kable()
+```
+
+
+
